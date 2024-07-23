@@ -59,6 +59,37 @@ def decision(response):
     return
 
 
+def decision(response):
+    #make empty list to stack stock-price data
+    data = []
+    ma20, ma20_prev = 0
+    ma60, ma60_prev = 0
+    output = response[output2]
+    
+    #Load stock-price data
+    for item in output:
+        data.append(item['stck_prpr'])
+    
+    if len(data) < 61 :
+        print("Need more data!")
+        return
+    #Compute ma20, ma60 data
+    ma20_prev = sum(data[-21:-1])/20
+    ma20 = sum(data[-20:])/20
+
+    ma60_prev = sum(data[-61:-1])/60
+    ma60 = sum(data[-60:])/60
+    
+    # **Prob** : Why we should compute all data? we just need current result so it more adapt on backtest
+    if (ma20_prev < ma60_prev) and (ma20 > ma60):
+        #Golden cross signal
+        return
+    elif (ma20_prev > ma60_prev) and (ma20 < ma60):
+        #Dead cross signal
+        return
+
+    return
+
 def tracking(token):
     #API domain, url
     domain = "https://openapivts.koreainvestment.com:29443"
