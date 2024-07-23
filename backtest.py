@@ -1,5 +1,6 @@
 import json
 
+budget = 1000000
 sample = None
 with open("sample.json", "r") as f:
     sample = json.load(f)
